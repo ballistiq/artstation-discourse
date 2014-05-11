@@ -12,8 +12,14 @@ BACKUP_ROUTE_FORMAT = /[a-zA-Z0-9\-_]*\d{4}(-\d{2}){2}-\d{6}\.tar\.gz/i unless d
 Discourse::Application.routes.draw do
 
   match "/404", to: "exceptions#not_found", via: [:get, :post]
+  get "/404-body" => "exceptions#not_found_body"
 
   mount Sidekiq::Web => "/sidekiq", constraints: AdminConstraint.new
+
+  if Rails.env.production?
+    require 'logster/middleware/viewer'
+    mount Logster::Middleware::Viewer.new(nil) => "/logs", constraints: AdminConstraint.new
+  end
 
   get "site" => "site#index"
 

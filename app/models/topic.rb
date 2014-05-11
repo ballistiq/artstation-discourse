@@ -4,12 +4,12 @@ require_dependency 'topic_view'
 require_dependency 'rate_limiter'
 require_dependency 'text_sentinel'
 require_dependency 'text_cleaner'
-require_dependency 'trashable'
 require_dependency 'archetype'
 
 class Topic < ActiveRecord::Base
   include ActionView::Helpers::SanitizeHelper
   include RateLimiter::OnCreateRecord
+  include HasCustomFields
   include Trashable
   extend Forwardable
 
@@ -104,6 +104,7 @@ class Topic < ActiveRecord::Base
   attr_accessor :user_data
   attr_accessor :posters  # TODO: can replace with posters_summary once we remove old list code
   attr_accessor :topic_list
+  attr_accessor :meta_data
   attr_accessor :include_last_poster
 
   # The regular order
@@ -319,8 +320,16 @@ class Topic < ActiveRecord::Base
     topics.where("topics.id NOT IN (?)", featured_topic_ids)
   end
 
+  def meta_data=(data)
+    custom_fields.replace(data)
+  end
+
+  def meta_data
+    custom_fields
+  end
+
   def update_meta_data(data)
-    self.meta_data = (self.meta_data || {}).merge(data.stringify_keys)
+    custom_fields.update(data)
     save
   end
 
@@ -342,8 +351,7 @@ class Topic < ActiveRecord::Base
   end
 
   def meta_data_string(key)
-    return unless meta_data.present?
-    meta_data[key.to_s]
+    custom_fields[key.to_s]
   end
 
   def self.listable_count_per_day(sinceDaysAgo=30)
@@ -821,7 +829,6 @@ end
 #  archived                :boolean          default(FALSE), not null
 #  bumped_at               :datetime         not null
 #  has_summary             :boolean          default(FALSE), not null
-#  meta_data               :hstore
 #  vote_count              :integer          default(0), not null
 #  archetype               :string(255)      default("regular"), not null
 #  featured_user4_id       :integer

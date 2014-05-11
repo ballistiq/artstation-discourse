@@ -3,7 +3,6 @@ require_dependency 'pretty_text'
 require_dependency 'rate_limiter'
 require_dependency 'post_revisor'
 require_dependency 'enum'
-require_dependency 'trashable'
 require_dependency 'post_analyzer'
 require_dependency 'validators/post_validator'
 require_dependency 'plugin/filter'
@@ -14,6 +13,7 @@ require 'digest/sha1'
 class Post < ActiveRecord::Base
   include RateLimiter::OnCreateRecord
   include Trashable
+  include HasCustomFields
 
   rate_limit
   rate_limit :limit_posts_per_day
@@ -168,6 +168,7 @@ class Post < ActiveRecord::Base
               .reject{|h| !h.include?('.')}
 
     hosts << GlobalSetting.hostname
+    hosts << RailsMultisite::ConnectionManagement.current_hostname
 
   end
 
@@ -497,7 +498,14 @@ class Post < ActiveRecord::Base
     revision = PostRevision.where(post_id: id, number: version).first
     return unless revision
     revision.user_id = last_editor_id
-    revision.modifications = changes.extract!(:raw, :cooked, :edit_reason)
+    modifications = changes.extract!(:raw, :cooked, :edit_reason)
+    [:raw, :cooked, :edit_reason].each do |field|
+      if modifications[field].present?
+        old_value = revision.modifications[field].try(:[], 0) || ""
+        new_value = modifications[field][1]
+        revision.modifications[field] = [old_value, new_value]
+      end
+    end
     revision.save
   end
 

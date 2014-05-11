@@ -30,7 +30,7 @@ en:
   posts: "posts"
   loading: "Loading"
   powered_by_html: 'Powered by <a href="http://www.discourse.org">Discourse</a>, best viewed with JavaScript enabled'
-  log_in: "Log In"
+  log_in: "Sign In"
 
   via: "%{username} via %{site_name}"
   is_reserved: "is reserved"
@@ -61,7 +61,7 @@ en:
     loading: "Loading Discussion..."
     permalink: "Permalink"
     imported_from: "This is a companion discussion topic for the original entry at %{link}"
-    in_reply_to: "in reply to %{username}"
+    in_reply_to: "reply to %{username}"
     replies:
       one: "1 reply"
       other: "%{count} replies"
@@ -208,7 +208,7 @@ en:
         user:
           attributes:
             password:
-              common: "is one of the 5000 most common passwords. Please use a more secure password."
+              common: "is one of the 10000 most common passwords. Please use a more secure password."
             ip_address:
               signup_not_allowed: "Signup is not allowed from this account."
 
@@ -358,11 +358,11 @@ en:
   post_action_types:
     off_topic:
       title: 'Off-Topic'
-      description: 'This post is radically off-topic in the current conversation, and should probably be moved to a different topic. If this is a topic, perhaps it does not belong here.'
+      description: 'This post is radically off-topic in the current topic, and should probably be moved. If this is a topic, perhaps it does not belong here.'
       long_form: 'flagged this as off-topic'
     spam:
       title: 'Spam'
-      description: 'This post is an advertisement. It is not useful or relevant to the current conversation, but promotional in nature.'
+      description: 'This post is an advertisement. It is not useful or relevant to the current topic, but promotional in nature.'
       long_form: 'flagged this as spam'
     inappropriate:
       title: 'Inappropriate'
@@ -410,7 +410,7 @@ en:
       email_body: "%{link}\n\n%{message}"
 
   flagging:
-    you_must_edit: '<p>Your post was flagged by the community. Please see your private messages.</p>'
+    you_must_edit: '<p>Your post was flagged by the community. Please <a href="/my/private-messages">see your private messages</a>.</p>'
     user_must_edit: '<p>Flagged content temporarily hidden.</p>'
 
   archetypes:
@@ -679,7 +679,6 @@ en:
     topics_per_period_in_top_summary: "How many topics loaded on the top topics summary"
     topics_per_period_in_top_page: "How many topics loaded on the top topics page"
     redirect_users_to_top_page: "Automatically redirect new & long-time-no-see users to top page"
-    redirect_new_users_to_top_page_duration: "Number of days during which new users are automatically redirect to the top page"
 
     enable_badges: "Enable the badge system (experimental)"
 
@@ -703,7 +702,7 @@ en:
     min_username_length: "Minimum username length. (Does not apply if global nickname uniqueness is forced)"
 
     min_password_length: "Minimum password length."
-    block_common_passwords: "Don't allow passwords that are in the 5000 most common passwords."
+    block_common_passwords: "Don't allow passwords that are in the 10000 most common passwords."
 
     enable_sso: "Enable single sign on via an external site"
     sso_url: "URL of single sign on endpoint"
@@ -782,7 +781,7 @@ en:
     newuser_max_images: "How many images a new user can add to a post"
     newuser_max_attachments: "How many attachments a new user can add to a post"
     newuser_max_mentions_per_post: "Maximum number of @name notifications a new user can use in a post"
-    newuser_max_replies_per_topic: "Maximum number of replies a new user can make in a single topic"
+    newuser_max_replies_per_topic: "Maximum number of replies a new user can make in a single topic until someone replies to them"
     max_mentions_per_post: "Maximum number of @name notifications you can use in a post"
 
     create_thumbnails: "Create thumbnails for lightboxed images"
@@ -803,7 +802,7 @@ en:
 
     max_image_size_kb: "The maximum size of images we allow users to upload in kB - configure the limit in nginx (client_max_body_size) / apache or proxy as well."
     max_attachment_size_kb: "The maximum size of files we allow users to upload in kB - configure the limit in nginx (client_max_body_size) / apache or proxy as well."
-    authorized_extensions: "A pipe (|) separated list of file extensions allowed for upload"
+    authorized_extensions: "A pipe (|) separated list of file extensions allowed for upload ('*' for enabling all file types)"
     max_similar_results: "How many similar topics to show a user while they are composing a new topic"
 
     title_prettify: "Prevent common title typos and errors, including all caps, lowercase first character, multiple ! and ?, extra . at end, etc."
@@ -864,7 +863,7 @@ en:
     suppress_uncategorized_badge: "Don't show the badge for uncategorized topics in topic lists"
     min_posts_for_search_in_topic: "Disable search within topic if topics have less than minimum number posts"
 
-    global_notice: "Display a global banner to all users of the site, change to blank to hide it (HTML is allowed)"
+    global_notice: "Display an URGENT, EMERGENCY global banner notice to all visitors, change to blank to hide it (HTML allowed)."
 
     enable_names: "Allow users to show their full names"
     display_name_on_posts: "Also show a user's full name on their posts"
@@ -1092,6 +1091,11 @@ en:
       one: "1 flag is waiting to be handled"
       other: "%{count} flags are waiting to be handled"
 
+  flag_reasons:
+    off_topic: "Your post was flagged as **off-topic**: the community thinks it does not fit into the topic, as currently defined by the title and the first post."
+    inappropriate: "Your post was flagged as **inappropriate**: the community thinks it is offensive, abusive, or a violation of [the community guidelines](/faq)."
+    spam: "Your post was flagged as **spam**: the community thinks it is an advertisement, not useful or relevant to the topic, but promotional in nature."
+
   system_messages:
     post_hidden:
       subject_template: "Post hidden due to community flagging"
@@ -1104,7 +1108,9 @@ en:
 
         ... was hidden due to community flagging.
 
-        Keep in mind that multiple community members flagged this post before it was hidden, so **please consider how you might revise your post to reflect their feedback.** You can edit your post after %{edit_delay} minutes, and it will be automatically unhidden. This will increase your forum trust level.
+        %{flag_reason}
+
+        Keep in mind that multiple community members flagged this post before it was hidden, so **please consider how you might revise your post to reflect their feedback.** You can edit your post after %{edit_delay} minutes, and it will be automatically unhidden. This will increase your trust level.
 
         However, if the post is hidden by the community a second time, the moderators will be notified -- and there may be further action, including the possible suspension of your account.
 
@@ -1368,14 +1374,14 @@ en:
       why: "Here's a brief summary of the discussion on %{site_link} since we last saw you on %{last_seen_at}."
       subject_template: "[%{site_name}] Digest for %{date}"
       new_activity: "New activity on your topics and posts:"
-      top_topics: "Recent posts the community enjoyed:"
-      other_new_topics: "Popular topics:"
+      top_topics: "Popular posts"
+      other_new_topics: "Popular topics"
       unsubscribe: "This summary email is sent as a courtesy notification from %{site_link} when we haven't seen you in a while. To unsubscribe %{unsubscribe_link}."
       click_here: "click here"
       from: "%{site_name} digest"
       read_more: "Read More"
-      more_topics: "There were **%{new_topics_since_seen}** other new topics posted since you were last here on %{last_seen_at}."
-      more_topics_category: "There were **%{new_topics_since_seen}** other new topics posted in these categories since you were last here on %{last_seen_at}:"
+      more_topics: "There were %{new_topics_since_seen} new topics posted since you last visited on %{last_seen_at}."
+      more_topics_category: "There were %{new_topics_since_seen} new topics posted in these categories since you last visited on %{last_seen_at}:"
 
       posts:
         one: "1 post"
@@ -1461,7 +1467,7 @@ en:
   deleted: 'deleted'
 
   upload:
-    edit_reason: "We downloaded local copies of images in this post"
+    edit_reason: "downloaded local copies of images"
     unauthorized: "Sorry, the file you are trying to upload is not authorized (authorized extensions: %{authorized_extensions})."
     pasted_image_filename: "Pasted image"
     store_failure: "Failed to store upload #%{upload_id} for user #%{user_id}."

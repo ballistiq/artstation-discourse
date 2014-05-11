@@ -57,6 +57,17 @@ Discourse.URL = Em.Object.createWithMixins({
       return;
     }
 
+    // Scroll to the same page, differnt anchor
+    if (path.indexOf('#') === 0) {
+      var $elem = $(path);
+      if ($elem.length > 0) {
+        Em.run.schedule('afterRender', function() {
+          $('html,body').scrollTop($elem.offset().top - $('header').height() - 15);
+        });
+      }
+      return;
+    }
+
     var oldPath = window.location.pathname;
     path = path.replace(/(https?\:)?\/\/[^\/]+/, '');
 
@@ -241,7 +252,26 @@ Discourse.URL = Em.Object.createWithMixins({
   handleURL: function(path) {
     var router = this.get('router');
     router.router.updateURL(path);
-    return router.handleURL(path);
+
+    var split = path.split('#'),
+        elementId;
+
+    if (split.length === 2) {
+      path = split[0];
+      elementId = split[1];
+    }
+
+    var transition = router.handleURL(path);
+    transition.promise.then(function() {
+      if (elementId) {
+        Em.run.next('afterRender', function() {
+          var offset = $('#' + elementId).offset();
+          if (offset && offset.top) {
+            $('html, body').scrollTop(offset.top - $('header').height() - 10);
+          }
+        });
+      }
+    });
   }
 
 });

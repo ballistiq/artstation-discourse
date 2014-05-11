@@ -8,6 +8,10 @@
 **/
 Discourse.User = Discourse.Model.extend({
 
+  hasPMs: Em.computed.gt("private_messages_stats.all", 0),
+  hasStartedPMs: Em.computed.gt("private_messages_stats.mine", 0),
+  hasUnreadPMs: Em.computed.gt("private_messages_stats.unread", 0),
+
   /**
     The user's stream
 
@@ -279,17 +283,6 @@ Discourse.User = Discourse.Model.extend({
   statsExcludingPms: function() {
     if (this.blank('stats')) return [];
     return this.get('stats').rejectProperty('isPM');
-  }.property('stats.@each.isPM'),
-
-  /**
-  This user's stats, only including PMs.
-
-    @property statsPmsOnly
-    @type {Array}
-  **/
-  statsPmsOnly: function() {
-    if (this.blank('stats')) return [];
-    return this.get('stats').filterProperty('isPM');
   }.property('stats.@each.isPM'),
 
 

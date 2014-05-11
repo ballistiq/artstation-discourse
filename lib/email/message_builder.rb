@@ -1,4 +1,4 @@
-# Builds a Mail::Mesage we can use for sending. Optionally supports using a template
+# Builds a Mail::Message we can use for sending. Optionally supports using a template
 # for the body and subject
 module Email
 
@@ -23,15 +23,19 @@ module Email
 
       @template_args = {site_name: SiteSetting.email_prefix.presence || SiteSetting.title,
                         base_url: Discourse.base_url,
-                        user_preferences_url: "#{Discourse.base_url}/user_preferences" }.merge!(@opts)
+                        user_preferences_url: "#{Discourse.base_url}/my/preferences" }.merge!(@opts)
 
       if @template_args[:url].present?
-        @template_args[:respond_instructions] =
-          if allow_reply_by_email?
-            I18n.t('user_notifications.reply_by_email', @template_args)
-          else
-            I18n.t('user_notifications.visit_link_to_respond', @template_args)
-          end
+        if @opts[:include_respond_instructions] == false
+          @template_args[:respond_instructions] = ''
+        else
+          @template_args[:respond_instructions] =
+            if allow_reply_by_email?
+              I18n.t('user_notifications.reply_by_email', @template_args)
+            else
+              I18n.t('user_notifications.visit_link_to_respond', @template_args)
+            end
+        end
       end
     end
 

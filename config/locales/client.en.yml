@@ -98,7 +98,7 @@ en:
     of_value: "of"
     generic_error: "Sorry, an error has occurred."
     generic_error_with_reason: "An error occurred: %{error}"
-    log_in: "Log In"
+    log_in: "Sign In"
     age: "Age"
     last_post: "Last Post"
     joined: "Joined"
@@ -417,6 +417,8 @@ en:
 
       ip_address:
         title: "Last IP Address"
+      registration_ip_address:
+        title: "Registration IP Address"
       avatar:
         title: "Avatar"
       title:
@@ -482,10 +484,11 @@ en:
       action: "I forgot my password"
       invite: "Enter your username or email address, and we'll send you a password reset email."
       reset: "Reset Password"
-      complete: "If an account matches that username or email address, you should receive an email with instructions on how to reset your password shortly."
+      complete_username: "If an account matches the username <b>%{username}</b>, you should receive an email with instructions on how to reset your password shortly."
+      complete_email: "If an account matches <b>%{email}</b>, you should receive an email with instructions on how to reset your password shortly."
 
     login:
-      title: "Log In"
+      title: "Sign In"
       username: "Login"
       password: "Password"
       email_placeholder: "email or username"
@@ -841,7 +844,7 @@ en:
         error: "Sorry, there was an error inviting that user."
 
       invite_reply:
-        title: 'Invite Friends'
+        title: 'Invite'
         action: 'Email Invite'
         help: 'send invitations to friends so they can reply to this topic with a single click'
         to_topic: "We'll send a brief email allowing your friend to immediately reply to this topic by clicking a link, no login required."
@@ -851,7 +854,7 @@ en:
         success: "Thanks! We mailed out an invitation to <b>{{email}}</b>. We'll let you know when they redeem your invitation. Check the invitations tab on your user page to keep track of who you've invited."
         error: "Sorry, we couldn't invite that person. Perhaps they are already a user?"
 
-      login_reply: 'Log In to Reply'
+      login_reply: 'Sign In to Reply'
 
       filters:
         n_posts:
@@ -906,7 +909,7 @@ en:
       edit: "Editing {{link}} by {{replyAvatar}} {{username}}"
       edit_reason: "Reason: "
       post_number: "post {{number}}"
-      in_reply_to: "in reply to"
+      in_reply_to: "reply to"
       last_edited_on: "post last edited on"
       reply_as_new_topic: "Reply as new Topic"
       continue_discussion: "Continuing the discussion from {{postLink}}:"
@@ -920,6 +923,7 @@ en:
       gap:
         one: "1 post hidden"
         other: "{{count}} posts hidden"
+      more_links: "{{count}} more..."
 
       has_replies:
         one: "Reply"
@@ -1749,6 +1753,7 @@ en:
         grant: Grant
         no_user_badges: "%{name} has not been granted any badges."
         no_badges: There are no badges that can be granted.
+        allow_title: Allow badge to be used as a title
 
     lightbox:
       download: "download"

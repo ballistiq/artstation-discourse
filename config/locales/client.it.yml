@@ -372,6 +372,8 @@ it:
         instructions: "Deve essere almeno di %{count} caratteri."
       ip_address:
         title: "Ultimo indirizzo IP"
+      registration_ip_address:
+        title: "Indirizzo IP di Registrazione"
       avatar:
         title: "Avatar"
       title:
@@ -426,7 +428,8 @@ it:
       action: "Ho dimenticato la mia password"
       invite: "Inserisci il tuo username o l'indirizzo email. Ti manderemo un'email per il reset della password."
       reset: "recupera password"
-      complete: "Se un account corrisponde a questo username o indirizzo email, dovresti ricevere  a breve un'email con le istruzioni su come resettare la tua password."
+      complete_username: "Se un account risulta avere l'username <b>%{username}</b>, dovresti ricevere un'email con le istruzioni per ripristinare la tua password a breve."
+      complete_email: "Se risulterà un account con <b>%{email}</b>, dovresti ricevere un'email contenente le istruzioni per ripristinare la tua password a breve."
     login:
       title: "Accedi"
       username: "Accedi"
@@ -739,7 +742,7 @@ it:
         success: "Grazie! Abbiamo invitato l'utente a partecipare a questo messaggio privato."
         error: "Spiacenti, si è verificato un errore durante l'invito dell'utente."
       invite_reply:
-        title: 'Invita gli amici'
+        title: 'Invita'
         action: 'Invita via email'
         help: 'Invia inviti agli amici. Potranno rispondere a questo topic con un solo click'
         to_topic: "Invieremo al tuo amico una breve email permettendogli di rispondere direttamente a questo topic, senza necessità di registrazione."
@@ -747,7 +750,7 @@ it:
         email_placeholder: 'nome@esempio.com'
         success: "Grazie! Abbiamo invitato <b>{{email}}</b>. Ti faremo sapere quando l'invito verrà accettato. Controlla la tab Inviti nella tua pagina personale per tener traccia delle persone che inviti. "
         error: "Spiacenti, non possiamo invitare quella persona. Forse è già un utente?"
-      login_reply: 'Effettua l''accesso per rispondere'
+      login_reply: 'Accedi per rispondere'
       filters:
         n_posts:
           one: "1 post"
@@ -796,7 +799,7 @@ it:
       edit: "Editing {{link}} di {{replyAvatar}} {{username}}"
       edit_reason: "Motivo:"
       post_number: "post {{number}}"
-      in_reply_to: "in risposta a"
+      in_reply_to: "rispondi a"
       last_edited_on: "Ultima modifica al post:"
       reply_as_new_topic: "Rispondi come nuovo topic"
       continue_discussion: "Continua la discussione da {{postLink}}:"
@@ -810,6 +813,7 @@ it:
       gap:
         one: "1 post nascosto"
         other: "{{count}} post nascosti"
+      more_links: "{{count}} più..."
       has_replies:
         one: "Risposta"
         other: "Risposte"
@@ -1299,6 +1303,20 @@ it:
         delete: "Cancella"
         delete_confirm: "Cancella questa personalizzazione?"
         about: "La personalizzazione del sito ti permette di modificare fogli di stile e testate. Selezionane o aggiungine una per iniziare."
+        color: "Colore"
+        opacity: "Opacità"
+        copy: "Copia"
+        css_html:
+          title: "CSS, HTML"
+          long_title: "Personalizzazioni CSS e HTML"
+        colors:
+          title: "Colori"
+          long_title: "Combinazioni Colori"
+          about: "Le combinazioni di colori ti permettono di modificare i colori utilizzati sul sito senza scrivere CSS. Scegline una per iniziare."
+          new_name: "Nuova Combinazione Colori"
+          copy_name_prefix: "Copia di"
+          delete_confirm: "Eliminare questa combinazione di colori?"
+          under_construction: "AVVISO: I cambiamenti effettuati qui non avranno alcun effetto! Questa funzionalità è in costruzione!"
       email:
         title: "Email"
         settings: "Impostazioni"
@@ -1562,6 +1580,7 @@ it:
         new_badge: Nuova Targhetta
         new: Nuovo
         name: Nome
+        badge: Targhetta
         display_name: Visualizza Nome
         description: Descrizione
         badge_type: Tipo di Targhetta
@@ -1578,6 +1597,7 @@ it:
         grant: Assegna
         no_user_badges: "%{name} non ha ricevuto alcuna targhetta."
         no_badges: Non ci sono targhette da assegnare.
+        allow_title: Permetti di utilizzare le targhette come titoli
     lightbox:
       download: "Scaricamento"
     keyboard_shortcuts_help:
