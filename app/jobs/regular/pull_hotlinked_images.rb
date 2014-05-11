@@ -21,6 +21,7 @@ module Jobs
       return unless post.present?
 
       raw = post.raw.dup
+      start_raw = raw.dup
       downloaded_urls = {}
 
       extract_images_from(post.cooked).each do |image|
@@ -28,10 +29,14 @@ module Jobs
         src = "http:" + src if src.start_with?("//")
 
         if is_valid_image_url(src)
+          hotlinked = nil
           begin
             # have we already downloaded that file?
-            if !downloaded_urls.include?(src)
-              hotlinked = FileHelper.download(src, @max_size, "discourse-hotlinked") rescue Discourse::InvalidParameters
+            unless downloaded_urls.include?(src)
+              begin
+                hotlinked = FileHelper.download(src, @max_size, "discourse-hotlinked")
+              rescue Discourse::InvalidParameters
+              end
               if hotlinked.try(:size) <= @max_size
                 filename = File.basename(URI.parse(src).path)
                 upload = Upload.create_for(post.user_id, hotlinked, filename, hotlinked.size, { origin: src })
@@ -68,10 +73,17 @@ module Jobs
 
       end
 
-      # TODO: make sure the post hasn´t changed while we were downloading remote images
-      if raw != post.raw
-        options = { edit_reason: I18n.t("upload.edit_reason") }
-        options[:bypass_bump] = true if args[:bypass_bump] == true
+      post.reload
+      if start_raw != post.raw
+        # post was edited - start over (after 10 minutes)
+        backoff = args.fetch(:backoff, 1) + 1
+        delay = SiteSetting.ninja_edit_window * args[:backoff]
+        Jobs.enqueue_in(delay.seconds.to_i, :pull_hotlinked_images, args.merge!(backoff: backoff))
+      elsif raw != post.raw
+        options = {
+          edit_reason: I18n.t("upload.edit_reason"),
+          bypass_bump: true # we never want that job to bump the topic
+        }
         post.revise(Discourse.system_user, raw, options)
       end
     end
@@ -84,7 +96,8 @@ module Jobs
     def is_valid_image_url(src)
       src.present? &&
       !Discourse.store.has_been_uploaded?(src) &&
-      !src.start_with?(Discourse.asset_host || Discourse.base_url_no_prefix)
+      !src.start_with?(Discourse.asset_host || Discourse.base_url_no_prefix) &&
+      SiteSetting.should_download_images?(src)
     end
 
   end

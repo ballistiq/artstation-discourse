@@ -375,8 +375,8 @@
     left: 30px;
     right: 30px;
     position: absolute;
-    top: 50px;
     bottom: 48px;
+    top: 50px;
 
     // this removes the topmost margin;
     // if we don't have this, all posts would have extra space at the top
@@ -462,4 +462,14 @@
 .control-row.reply-area {
   padding-left: 20px;
   padding-right: 20px;
+}
+
+@media screen and (min-width: 1550px) {
+  #reply-control {
+    .wmd-controls {
+      width: 1450px;
+      left: auto;
+      right: auto;
+    }
+  }
 }

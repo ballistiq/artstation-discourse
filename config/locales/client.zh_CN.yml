@@ -267,7 +267,7 @@ zh_CN:
         ok: "您的名字符合要求。"
       username:
         title: "用户名"
-        instructions: "必须是独一无二的，中间不能有空格。其他人可以使用 @{{username}} 来提及您。"
+        instructions: "必须是独一无二的，中间不能有空格。其他人可以使用 @username 来提及您。"
         short_instructions: "其他人可以用 @{{username}} 来提及您。"
         available: "您的用户名可用。"
         global_match: "电子邮箱与注册用户名相匹配。"
@@ -522,7 +522,7 @@ zh_CN:
       local_tip: "点击从您的设备中选择一张图片。"
       local_tip_with_attachments: "点击从您的设备中选择图片或文件（支持的格式： {{authorized_extensions}}）。"
       hint: "（您也可以通过拖放至编辑器的方式来上传）"
-      hint_for_chrome: "（您也可以通过拖放或复制粘帖至编辑器的方式来上传）"
+      hint_for_supported_browsers: "（您也可以通过拖放或复制粘帖至编辑器的方式来上传）"
       uploading: "上传中"
       image_link: "链接您的图片到"
     search:

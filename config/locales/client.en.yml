@@ -3,7 +3,14 @@
 # to the Javascript app.
 #
 # To work with us on translations, see:
-# https://www.transifex.com/projects/p/discourse-pt-br/
+# https://www.transifex.com/projects/p/discourse-org/
+#
+# This is a "source" file, which is used by Transifex to get translations for other languages.
+# After this file is changed, it needs to be pushed by a maintainer to Transifex:
+#
+#   tx push -s
+#
+# Read more here: https://meta.discourse.org/t/contribute-a-translation-to-discourse/14882
 #
 # To validate this YAML file after you change it, please paste it into
 # http://yamllint.com/
@@ -177,6 +184,7 @@ en:
       sent_by_you: "Sent by <a href='{{userUrl}}'>you</a>"
 
     groups:
+      visible: "Group is visible to all users"
       title:
         one: "group"
         other: "groups"
@@ -521,12 +529,12 @@ en:
         need_more_for_reply: "{{n}} to go for the post"
 
       error:
-        title_missing: "Title is required."
-        title_too_short: "Title must be at least {{min}} characters long."
-        title_too_long: "Title must be less than {{max}} characters long."
-        post_missing: "Post can't be empty."
-        post_length: "Post must be at least {{min}} characters long."
-        category_missing: "You must choose a category."
+        title_missing: "Title is required"
+        title_too_short: "Title must be at least {{min}} characters"
+        title_too_long: "Title can't be more than {{max}} characters"
+        post_missing: "Post can't be empty"
+        post_length: "Post must be at least {{min}} characters"
+        category_missing: "You must choose a category"
 
       save_edit: "Save Edit"
       reply_original: "Reply on Original Topic"
@@ -610,7 +618,7 @@ en:
       local_tip: "click to select an image from your device"
       local_tip_with_attachments: "click to select an image or a file from your device (allowed extensions: {{authorized_extensions}})"
       hint: "(you can also drag & drop into the editor to upload them)"
-      hint_for_chrome: "(you can also drag and drop or paste images into the editor to upload them)"
+      hint_for_supported_browsers: "(you can also drag and drop or paste images into the editor to upload them)"
       uploading: "Uploading"
       image_link: "link your image will point to"
 
@@ -1437,13 +1445,28 @@ en:
         delete: "Delete"
         delete_confirm: "Delete this customization?"
         about: "Site Customization allow you to modify stylesheets and headers on the site. Choose or add one to start editing."
+        color: "Color"
+        opacity: "Opacity"
+        copy: "Copy"
+        css_html:
+          title: "CSS, HTML"
+          long_title: "CSS and HTML Customizations"
+        colors:
+          title: "Colors"
+          long_title: "Color Schemes"
+          about: "Color schemes allow you to modify the colors used on the site without writing CSS. Choose or add one to start."
+          new_name: "New Color Scheme"
+          copy_name_prefix: "Copy of"
+          delete_confirm: "Delete this color scheme?"
+          under_construction: "NOTE: Changes made here will do nothing! This feature is under construction!"
+
 
       email:
         title: "Email"
         settings: "Settings"
         all: "All"
         sending_test: "Sending test Email..."
-        test_error: "There was an issue sending email. Please check your settings and try again."
+        test_error: "There was a problem sending the test email. Please double-check your mail settings, verify that your host is not blocking mail connections, and try again."
         sent: "Sent"
         skipped: "Skipped"
         sent_at: "Sent At"
@@ -1709,6 +1732,7 @@ en:
         new_badge: New Badge
         new: New
         name: Name
+        badge: Badge
         display_name: Display Name
         description: Description
         badge_type: Badge Type
